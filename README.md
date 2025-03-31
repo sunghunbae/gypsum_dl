@@ -20,27 +20,70 @@ Ropp PJ, Kaminsky JC, Yablonski S, Durrant JD (2019) Dimorphite-DL: An
 open-source program for enumerating the ionization states of drug-like small
 molecules. J Cheminform 11:14. doi:10.1186/s13321-019-0336-9.
 
+## Installation
+
+```bash
+$ pip install gypsum_dl
+```
+
 ## Getting Started
 
-To run Gypsum-DL, acquire a copy of this repository, either by git clone or by
-download. Install the required dependencies via your favorite python package
-manager. We suggest using Anaconda to manage packages:
+```py
+from gypsum_dl import MolStates
 
-```bash
-conda install -c rdkit rdkit numpy scipy mpi4py
+for smiles in [
+    'Oc1ccccc1',
+    'CCC=O',
+    'ClC(C[C@@](Cl)(C)F)(F)C(C(C)C)=O',
+    'FC(C(I)=C(CC(I)(Cl)C)CC)=C(Cl)C',
+    'CC(CC)=C(C/C(I)=C(C)/F)Cl',
+    'CC([C@@H]1CC[C@H](C(C)(C)C)CC1)(C)C',
+    ]:
+
+    print(f"example {smiles}")
+    st = MolStates(smiles)
+    for i, smiles in enumerate(st, start=1):
+        print(f"  [{i}] {smiles}")
+    print()
 ```
 
-If you encounter an error like `ImportError: libboost_python3.so.1.65.1:
-cannot open shared object file: No such file or directory`, [a helpful
-user](https://durrantlab.pitt.edu/forums/topic/importerror-libboost_python3-so-1-65-1-solved/)
-suggested installing RDKit this way instead:
-
 ```bash
-conda create -c conda-forge --name gypsum_dl_env rdkit numpy scipy mpi4py -y
-conda activate gypsum_dl_env
+example Oc1ccccc1
+  [1] [O-]c1ccccc1
+  [2] Oc1ccccc1
+
+example CCC=O
+  [1] C/C=C/O
+  [2] C/C=C\O
+  [3] CCC=O
+
+example ClC(C[C@@](Cl)(C)F)(F)C(C(C)C)=O
+  [1] CC(C)=C(O)[C@@](F)(Cl)C[C@@](C)(F)Cl
+  [2] CC(C)C(=O)[C@](F)(Cl)C[C@@](C)(F)Cl
+  [3] CC(C)=C(O)[C@](F)(Cl)C[C@@](C)(F)Cl
+  [4] CC(C)C(=O)[C@@](F)(Cl)C[C@@](C)(F)Cl
+
+example FC(C(I)=C(CC(I)(Cl)C)CC)=C(Cl)C
+  [1] CC/C(C[C@](C)(Cl)I)=C(I)/C(F)=C(/C)Cl
+  [2] CC/C(C[C@@](C)(Cl)I)=C(I)\C(F)=C(\C)Cl
+  [3] CC/C(C[C@@](C)(Cl)I)=C(I)/C(F)=C(\C)Cl
+  [4] CC/C(C[C@](C)(Cl)I)=C(I)\C(F)=C(\C)Cl
+  [5] CC/C(C[C@](C)(Cl)I)=C(I)/C(F)=C(\C)Cl
+
+example CC(CC)=C(C/C(I)=C(C)/F)Cl
+  [1] CC/C(C)=C(\Cl)C/C(I)=C(\C)F
+  [2] CC/C(C)=C(/Cl)C/C(I)=C(\C)F
+
+example CC([C@@H]1CC[C@H](C(C)(C)C)CC1)(C)C
+  [1] CC(C)(C)[C@H]1CC[C@@H](C(C)(C)C)CC1
 ```
 
-## Command-Line Parameters
+
+## Command-line interface (CLI)
+
+```bash
+$ run-gypsum-dl 
+```
 
 Gypsum-DL accepts the following command-line parameters:
 
@@ -120,13 +163,13 @@ Prepare a virtual library and save all 3D models to a single SDF file in the
 present directory:
 
 ```bash
-python run_gypsum_dl.py --source ./examples/sample_molecules.smi
+$ run-gypsum-dl --source ./examples/sample_molecules.smi
 ```
 
 Instead save all 3D models to a different, existing folder:
 
 ```bash
-python run_gypsum_dl.py --source ./examples/sample_molecules.smi \
+$ run-gypsum-dl --source ./examples/sample_molecules.smi \
    --output_folder /my/folder/
 ```
 
@@ -134,7 +177,7 @@ Additionally save the models associated with each input molecule to separate
 files:
 
 ```bash
-python run_gypsum_dl.py --source ./examples/sample_molecules.smi \
+$ run-gypsum-dl --source ./examples/sample_molecules.smi \
     --output_folder /my/folder/ --separate_output_files
 ```
 
@@ -142,49 +185,49 @@ In addition to saving a 3D SDF file, also save 3D PDB files and an HTML file
 with 2D structures (for debugging).
 
 ```bash
-python run_gypsum_dl.py --source ./examples/sample_molecules.smi \
+$ run-gypsum-dl --source ./examples/sample_molecules.smi \
     --output_folder /my/folder/ --add_pdb_output --add_html_output
 ```
 
 Save at most two variants per input molecule:
 
 ```bash
-python run_gypsum_dl.py --source ./examples/sample_molecules.smi \
+$ run-gypsum-dl --source ./examples/sample_molecules.smi \
     --output_folder /my/folder/ --max_variants_per_compound 2
 ```
 
 Control how Gypsum-DL ionizes the input molecules:
 
 ```bash
-python run_gypsum_dl.py --source ./examples/sample_molecules.smi \
+$ run-gypsum-dl --source ./examples/sample_molecules.smi \
     --output_folder /my/folder/ --min_ph 12 --max_ph 14 --pka_precision 1
 ```
 
 Run Gypsum-DL in serial mode (using only one processor):
 
 ```bash
-python run_gypsum_dl.py --source ./examples/sample_molecules.smi \
+$ run-gypsum-dl --source ./examples/sample_molecules.smi \
     --job_manager serial
 ```
 
 Run Gypsum-DL in multiprocessing mode, using 4 processors:
 
 ```bash
-python run_gypsum_dl.py --source ./examples/sample_molecules.smi \
+$ run-gypsum-dl --source ./examples/sample_molecules.smi \
     --job_manager multiprocessing --num_processors 4
 ```
 
 Run Gypsum-DL in mpi mode using all available processors:
 
 ```bash
-mpirun -n $NTASKS python -m mpi4py  run_gypsum_dl.py --source ./examples/sample_molecules.smi \
+$ mpirun -n $NTASKS python -m mpi4py  run_gypsum_dl.py --source ./examples/sample_molecules.smi \
     --job_manager mpi --num_processors -1
 ```
 
 Gypsum-DL can also take parameters from a JSON file:
 
 ```bash
-python run_gypsum_dl.py --json myparams.json
+$ run-gypsum-dl --json myparams.json
 ```
 
 Where `myparams.json` might look like:

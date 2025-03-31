@@ -1,3 +1,24 @@
+# Python
+__pycache__/
 *.pyc
-working_on_tests
-.DS_Store
+*.pyo
+*.pyd
+
+# Logs
+*.log
+
+# Build
+build/
+dist/
+*.egg-info/
+*.egg
+
+# Tests
+.pytest_cache/
+
+# Miscellaneous
+*.bak
+*.swp
+*.tmp
+*.tmp.*
+*~

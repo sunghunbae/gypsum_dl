@@ -88,7 +88,7 @@ def random_sample(lst, num, msg_if_cut=""):
     return lst
 
 
-def log(txt, trailing_whitespace=""):
+def log(txt, trailing_whitespace:str="", quiet:bool=True):
     """Prints a message to the screen.
 
     :param txt: The message to print.
@@ -98,18 +98,19 @@ def log(txt, trailing_whitespace=""):
     :type trailing_whitespace: string
     """
 
-    whitespace_before = txt[: len(txt) - len(txt.lstrip())].replace("\t", "    ")
-    print(
-        (
-            textwrap.fill(
-                txt.strip(),
-                width=80,
-                initial_indent=whitespace_before,
-                subsequent_indent=f"{whitespace_before}    ",
+    if not quiet:
+        whitespace_before = txt[: len(txt) - len(txt.lstrip())].replace("\t", "    ")
+        print(
+            (
+                textwrap.fill(
+                    txt.strip(),
+                    width=80,
+                    initial_indent=whitespace_before,
+                    subsequent_indent=f"{whitespace_before}    ",
+                )
+                + trailing_whitespace
             )
-            + trailing_whitespace
         )
-    )
 
 
 def fnd_contnrs_not_represntd(contnrs, results):

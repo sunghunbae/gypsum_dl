@@ -710,15 +710,11 @@ class ProtSubstructFuncs:
         :return: A list of the lines in the site_substructures.smarts file,
                  except blank lines and lines that start with "#"
         """
-
-        pwd = os.path.dirname(os.path.realpath(__file__))
-        site_structures_file = "{}/{}".format(pwd, "site_substructures.smarts")
-        lines = [
-            l
-            for l in open(site_structures_file, "r")
-            if l.strip() != "" and not l.startswith("#")
-        ]
-
+        # pwd = os.path.dirname(os.path.realpath(__file__))
+        # site_structures_file = "{}/{}".format(pwd, "site_substructures.smarts")
+        import importlib.resources
+        with importlib.resources.open_text("gypsum_dl.Steps.SMILES.dimorphite_dl", "site_substructures.smarts") as f:
+            lines = [ l for l in f if l.strip() != "" and not l.startswith("#") ]
         return lines
 
     @staticmethod
