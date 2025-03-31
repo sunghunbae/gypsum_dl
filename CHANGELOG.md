@@ -1,6 +1,14 @@
 Changes
 =======
 
+1.2.1 pypi
+* Packaged using pyproject.toml.
+* Added MolStates class to enumerate molecular states.
+* Data files were handled by `importlib.resources`: 
+`gypsum_dl/Steps/SMILES/site_structures.smarts`, `gypsum_dl/Steps/SMILES/dimorphite_dl/site_substructures.smarts`.
+* `Utils.log` were silenced by default `quiet=True`.
+* Test cases were added.
+
 1.2.1
 -----
 
