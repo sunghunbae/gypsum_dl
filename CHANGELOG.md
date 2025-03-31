@@ -1,7 +1,9 @@
 Changes
 =======
 
-1.2.1 pypi
+1.2.1 PyPi
+----------
+
 * Packaged using pyproject.toml.
 * Added MolStates class to enumerate molecular states.
 * Data files were handled by `importlib.resources`: 
