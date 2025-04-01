@@ -5,8 +5,9 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "gypsum_dl"
 dynamic = ["version"]
-requires-python = ">=3.11"
+requires-python = ">=3.9"
 dependencies = [
+    "six",
     "rdkit",
     "numpy",
     "scipy",
