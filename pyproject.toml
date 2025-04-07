@@ -15,7 +15,7 @@ dependencies = [
     ]
 authors = [{name = "Sung-Hun Bae", email="sunghun.bae@gmail.com"}, ]
 maintainers = [{name = "Sung-Hun Bae", email="sunghun.bae@gmail.com"}, ]
-description = "Gypsum-DL converts SMILES or flat SDF files into 3D models"
+description = "Gypsum-DL converts SMILES and 2D SDF into 3D models"
 readme = "README.md"
 license = "Apache-2.0"
 keywords = [
