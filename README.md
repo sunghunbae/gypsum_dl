@@ -33,7 +33,7 @@ $ pip install gypsum_dl
 ## Use as a library
 
 ```py
-from gypsum_dl import GymsumDL
+from gypsum_dl import GypsumDL
 
 for smiles in [
     'Oc1ccccc1',

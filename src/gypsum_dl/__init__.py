@@ -24,6 +24,6 @@
 # gypsum_top_dir = os.path.dirname(gypsum_gypsum_dir)
 # sys.path.extend([gypsum_gypsum_dir, gypsum_top_dir])
 
-__version__ = '1.2.4'
+__version__ = '1.2.5'
 
 from .GypsumDL import GypsumDL
