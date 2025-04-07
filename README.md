@@ -1,23 +1,26 @@
+This is a PyPI packaged version of `Gypsum-DL 1.2.1` with minor modifications: 
+  1. Added `GypsumDL` class, similar to `DimorphiteDL` class in the [`dimorphite_dl` package](https://pypi.org/project/dimorphite-dl/) 
+  2. Included a command-line interface.
+   
+The original source code and citations are below.
 
 # Gypsum-DL 1.2.1
 
-Gypsum-DL is a free, open-source program for preparing 3D small-molecule
-models. Beyond simply assigning atomic coordinates, Gypsum-DL accounts for
-alternate ionization, tautomeric, chiral, cis/trans isomeric, and
-ring-conformational forms. It is released under the Apache License, Version
-2.0 (see `LICENSE.txt`).
+Gypsum-DL is a free, open-source program for preparing 3D small-molecule models. Beyond simply assigning atomic coordinates, Gypsum-DL accounts for alternate ionization, tautomeric, chiral, cis/trans isomeric, and ring-conformational forms. It is released under the Apache License, Version 2.0 (see `LICENSE.txt`).
+
+[original source code at github](https://github.com/durrantlab/gypsum_dl)
 
 ## Citation
 
 If you use Gypsum-DL in your research, please cite:
 
-Ropp, Patrick J., Jacob O. Spiegel, Jennifer L. Walker, Harrison Green,
+* Ropp, Patrick J., Jacob O. Spiegel, Jennifer L. Walker, Harrison Green,
 Guillermo A. Morales, Katherine A. Milliken, John J. Ringe, and Jacob D.
 Durrant. (2019) "Gypsum-DL: An Open-source Program for Preparing
 Small-molecule Libraries for Structure-based Virtual Screening." Journal of
 Cheminformatics 11:1. doi:10.1186/s13321-019-0358-3.
 
-Ropp PJ, Kaminsky JC, Yablonski S, Durrant JD (2019) Dimorphite-DL: An
+* Ropp PJ, Kaminsky JC, Yablonski S, Durrant JD (2019) Dimorphite-DL: An
 open-source program for enumerating the ionization states of drug-like small
 molecules. J Cheminform 11:14. doi:10.1186/s13321-019-0336-9.
 
@@ -27,10 +30,10 @@ molecules. J Cheminform 11:14. doi:10.1186/s13321-019-0336-9.
 $ pip install gypsum_dl
 ```
 
-## Getting Started
+## Use as a library
 
 ```py
-from gypsum_dl import MolStates
+from gypsum_dl import GymsumDL
 
 for smiles in [
     'Oc1ccccc1',
@@ -42,7 +45,24 @@ for smiles in [
     ]:
 
     print(f"example {smiles}")
-    st = MolStates(smiles)
+    st = GypsumDL(smiles, 
+                  min_ph=6.4, 
+                  max_ph=8.4, 
+                  pka_precision=1.0,
+                  thoroughness=3,
+                  max_variants_per_compound=5,
+                  second_embed=False,
+                  skip_optimize_geometry=False,
+                  skip_alternate_ring_conformations=False,
+                  skip_adding_hydrogen=False,
+                  skip_making_tautomers=False,
+                  skip_enumerate_chiral_mol=False,
+                  skip_enumerate_double_bonds=False,
+                  let_tautomers_change_chirality=False,
+                  use_durrant_lab_filters=True,
+                  job_manager='serial',
+                  num_processors=1,
+                 )
     for i, smiles in enumerate(st, start=1):
         print(f"  [{i}] {smiles}")
     print()
@@ -80,7 +100,7 @@ example CC([C@@H]1CC[C@H](C(C)(C)C)CC1)(C)C
 ```
 
 
-## Command-line interface (CLI)
+## Use as a CLI (command-line interface)
 
 ```bash
 $ run-gypsum-dl 
