@@ -713,7 +713,8 @@ class ProtSubstructFuncs:
         # pwd = os.path.dirname(os.path.realpath(__file__))
         # site_structures_file = "{}/{}".format(pwd, "site_substructures.smarts")
         import importlib.resources
-        with importlib.resources.open_text("gypsum_dl.Steps.SMILES.dimorphite_dl", "site_substructures.smarts") as f:
+        source = importlib.resources.files("gypsum_dl.Steps.SMILES.dimorphite_dl") / "site_substructures.smarts" 
+        with open(source) as f:
             lines = [ l for l in f if l.strip() != "" and not l.startswith("#") ]
         return lines
 
